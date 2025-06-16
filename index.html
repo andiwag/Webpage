@@ -11,10 +11,19 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #007aff;
+            --primary-dark: #0056cc;
+            --text-color: #1d1d1f;
+            --text-secondary: #86868b;
+            --background-light: #f5f5f7;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #1d1d1f;
+            color: var(--text-color);
             background: #fff;
             scroll-behavior: smooth;
         }
@@ -28,7 +37,8 @@
             backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 20px 0;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .nav-container {
@@ -43,8 +53,25 @@
         .logo {
             font-size: 24px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: var(--text-color);
             text-decoration: none;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .nav-links {
@@ -55,13 +82,26 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #1d1d1f;
-            font-weight: 400;
-            transition: color 0.3s ease;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 5px 0;
         }
 
-        .nav-links a:hover {
-            color: #007aff;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
@@ -86,47 +126,85 @@
             background: url('images/hero_section.png') center/cover no-repeat;
             opacity: 0.8;
             z-index: 1;
+            animation: zoomIn 20s infinite alternate;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
             background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 20px;
+            padding: 60px;
+            border-radius: 30px;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: var(--transition-smooth);
+        }
+
+        .hero-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #1d1d1f;
+            color: var(--text-color);
             animation: fadeInUp 1s ease;
+            background: linear-gradient(45deg, var(--text-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            color: #86868b;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
             margin-bottom: 40px;
             animation: fadeInUp 1s ease 0.2s both;
         }
 
         .cta-button {
             display: inline-block;
-            background: #007aff;
+            background: var(--primary-color);
             color: white;
-            padding: 15px 40px;
+            padding: 18px 45px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             animation: fadeInUp 1s ease 0.4s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
-            background: #0056cc;
+            background: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
         }
@@ -176,12 +254,27 @@
 
         /* Skills Section */
         .skills {
-            background: #f5f5f7;
+            background: var(--background-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 122, 255, 0.05) 0%, rgba(0, 122, 255, 0.1) 100%);
+            z-index: 1;
         }
 
         .skills-grid {
+            position: relative;
+            z-index: 2;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
         }
 
@@ -190,25 +283,50 @@
             padding: 40px;
             border-radius: 20px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: var(--transition-smooth);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .skill-card:hover::before {
+            opacity: 0.05;
         }
 
         .skill-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
         .skill-icon {
-            width: 60px;
-            height: 60px;
-            background: #007aff;
+            width: 70px;
+            height: 70px;
+            background: var(--primary-color);
             border-radius: 50%;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
+            font-size: 28px;
+            transition: var(--transition-smooth);
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .skill-card h3 {
@@ -260,13 +378,32 @@
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: var(--transition-smooth);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            position: relative;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .portfolio-card:hover::before {
+            opacity: 0.1;
         }
 
         .portfolio-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
         .portfolio-image {
@@ -279,6 +416,23 @@
             color: white;
             font-size: 1.2rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.2), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .portfolio-card:hover .portfolio-image::after {
+            opacity: 1;
         }
 
         .portfolio-content {
@@ -347,7 +501,7 @@
 
         /* Contact Section */
         .contact {
-            background: #1d1d1f;
+            background: var(--text-color);
             color: white;
             text-align: center;
             position: relative;
@@ -362,8 +516,14 @@
             right: 0;
             bottom: 0;
             background: url('images/contact.png') center/cover no-repeat;
-            opacity: 0.2;
+            opacity: 0.15;
             z-index: 1;
+            animation: slowZoom 30s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
         .contact h2 {
@@ -407,20 +567,52 @@
             gap: 15px;
             color: #ffffff;
             text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 10px 20px;
+            transition: var(--transition-smooth);
+            padding: 15px 25px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 15px;
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .contact-item:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateX(10px);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .contact-item span:first-child {
             font-size: 1.5rem;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
 
         /* Animations */
@@ -483,6 +675,7 @@
     </style>
 </head>
 <body>
+    <div class="scroll-progress"></div>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -616,7 +809,15 @@
             }
         });
 
-        // Simple animation on scroll
+        // Add scroll progress bar functionality
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            scrollProgress.style.width = `${progress}%`;
+        });
+
+        // Enhanced scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -627,16 +828,22 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    if (entry.target.classList.contains('skill-card')) {
+                        entry.target.style.transitionDelay = `${entry.target.dataset.delay || 0}s`;
+                    }
                 }
             });
         }, observerOptions);
 
-        // Observe all sections for animations
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
+        // Observe all sections and skill cards for animations
+        document.querySelectorAll('.section, .skill-card').forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            if (element.classList.contains('skill-card')) {
+                element.dataset.delay = `${index * 0.1}`;
+            }
+            observer.observe(element);
         });
 
         // GitHub API Integration
