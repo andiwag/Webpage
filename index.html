@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andreas Wagner - AI Enthusiast and Engineer</title>
+    <title>Andreas Wagner - AI Enthusiast and Researcher</title>
     <style>
         * {
             margin: 0;
@@ -72,6 +72,30 @@
             justify-content: center;
             text-align: center;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/hero_section.png') center/cover no-repeat;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .hero-content h1 {
@@ -326,36 +350,77 @@
             background: #1d1d1f;
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/contact.png') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 1;
         }
 
         .contact h2 {
             color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .contact-content {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .contact-text {
+            text-align: left;
+        }
+
+        .contact-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ffffff;
         }
 
         .contact-info {
             display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: #86868b;
+            gap: 15px;
+            color: #ffffff;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
         }
 
         .contact-item:hover {
-            color: #007aff;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        .contact-item span:first-child {
+            font-size: 1.5rem;
         }
 
         /* Animations */
@@ -397,9 +462,22 @@
                 gap: 40px;
             }
 
+            .contact-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-text {
+                text-align: center;
+            }
+
             .contact-info {
-                flex-direction: column;
-                gap: 20px;
+                align-items: center;
+            }
+
+            .contact-item {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -490,7 +568,10 @@
     <section id="contact" class="section contact">
         <h2>Kontakt</h2>
         <div class="contact-content">
-            <p>Bereit, gemeinsam AI-Projekte mit echtem Impact zu entwickeln?</p>
+            <div class="contact-text">
+                <p>Bereit, gemeinsam AI-Projekte mit echtem Impact zu entwickeln?</p>
+                <p>Kontaktieren Sie mich für spannende Projekte und Kooperationen im Bereich künstlicher Intelligenz.</p>
+            </div>
             <div class="contact-info">
                 <a href="mailto:45andreas.wagner45@gmail.com" class="contact-item">
                     <span>📧</span>
