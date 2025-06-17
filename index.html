@@ -707,15 +707,7 @@
             }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
+        /* Remove floating animation */
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -759,7 +751,8 @@
 
             .contact-content {
                 grid-template-columns: 1fr;
-                text-align: center;
+                gap: 40px;
+                padding: 0 20px;
             }
 
             .contact-text {
@@ -810,7 +803,7 @@
                 <br>
                 <p>Mein Fokus liegt auf der Entwicklung von Projekten, die nicht nur technisch exzellent sind, sondern auch einen positiven Beitrag für Unternehmen und Gesellschaft leisten. Ich glaube daran, dass AI das Potenzial hat, die Welt zu verbessern – und arbeite jeden Tag daran, dieses Potenzial zu realisieren.</p>
             </div>
-            <div class="about-image floating">
+            <div class="about-image">
                 <img src="images/chad_pic.png" alt="Andreas Wagner - AI Engineer & Researcher">
             </div>
         </div>
@@ -929,22 +922,36 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    if (entry.target.classList.contains('skill-card')) {
-                        entry.target.style.transitionDelay = `${entry.target.dataset.delay || 0}s`;
+                    if (entry.target.classList.contains('section')) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    } else if (entry.target.classList.contains('skill-card')) {
+                        // Use requestAnimationFrame for smoother animations
+                        requestAnimationFrame(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        });
                     }
                 }
             });
         }, observerOptions);
 
-        // Observe all sections and skill cards for animations
-        document.querySelectorAll('.section, .skill-card').forEach((element, index) => {
+        // Pre-load skills section
+        const skillsSection = document.querySelector('.skills');
+        if (skillsSection) {
+            skillsSection.style.opacity = '1';
+            skillsSection.style.transform = 'translateY(0)';
+        }
+
+        // Observe sections and skill cards with optimized animations
+        document.querySelectorAll('.section:not(.skills), .skill-card').forEach((element, index) => {
             element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            
             if (element.classList.contains('skill-card')) {
-                element.dataset.delay = `${index * 0.1}`;
+                // Reduce delay between cards
+                element.dataset.delay = `${index * 0.05}`;
             }
             observer.observe(element);
         });
