@@ -18,8 +18,8 @@
 
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --ai-gradient: linear-gradient(135deg, #00d4ff 0%, #0099cc 50%, #ff6b35 100%);
-            --neural-gradient: linear-gradient(45deg, #ff6b35, #f7931e, #00d4ff, #0099cc);
+            --ai-gradient: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --neural-gradient: linear-gradient(45deg, #00d4ff, #0099cc, #667eea);
             --text-primary: #ffffff;
             --text-secondary: #b8c5d6;
             --text-muted: #8a9ba8;
@@ -33,7 +33,7 @@
             --shadow-medium: rgba(0, 0, 0, 0.3);
             --shadow-strong: rgba(0, 0, 0, 0.5);
             --glow-primary: rgba(0, 212, 255, 0.3);
-            --glow-accent: rgba(255, 107, 53, 0.3);
+            --glow-accent: rgba(0, 212, 255, 0.2);
             --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,9 +59,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(102, 126, 234, 0.05) 0%, transparent 50%);
             animation: neuralPulse 8s ease-in-out infinite alternate;
         }
 
@@ -342,63 +342,152 @@
 
         /* About Section */
         .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-intro {
+            margin-bottom: 3rem;
+        }
+
+        .about-intro h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .about-text {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.8;
             color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
         }
 
         .about-text p {
             margin-bottom: 1.5rem;
         }
 
-        .about-image {
+        .about-image-container {
             position: relative;
-            border-radius: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 20px 40px var(--shadow-strong);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
+            box-shadow: 0 25px 50px var(--shadow-strong);
             transition: var(--transition-smooth);
         }
 
-        .about-image:hover img {
-            transform: scale(1.05);
+        .about-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--ai-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .about-image-container:hover::before {
+            opacity: 0.1;
+        }
+
+        .about-image-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 70px var(--shadow-strong);
+        }
+
+        .about-image-container img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
+        }
+
+        .about-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-medium);
+            border-color: var(--glow-primary);
+        }
+
+        .about-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         /* Skills Section */
         .skills {
-            background: var(--bg-secondary);
-            border-radius: 30px;
-            margin: 2rem;
-            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .skills-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
         }
 
         .skill-card {
             background: var(--bg-card);
-            padding: 2rem;
+            padding: 3rem;
             border-radius: 20px;
-            text-align: center;
-            transition: var(--transition-smooth);
             border: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .skill-card::before {
@@ -407,20 +496,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 4px;
             background: var(--ai-gradient);
-            opacity: 0;
+            transform: scaleX(0);
             transition: var(--transition-smooth);
-            z-index: 1;
         }
 
         .skill-card:hover::before {
-            opacity: 0.05;
+            transform: scaleX(1);
         }
 
         .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--shadow-strong);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--shadow-medium);
             border-color: var(--glow-primary);
         }
 
@@ -428,14 +516,17 @@
             width: 80px;
             height: 80px;
             background: var(--ai-gradient);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            position: relative;
-            z-index: 2;
+            font-size: 2.2rem;
+            transition: var(--transition-smooth);
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.05);
         }
 
         .skill-card h3 {
@@ -443,35 +534,46 @@
             margin-bottom: 1rem;
             color: var(--text-primary);
             font-weight: 700;
-            position: relative;
-            z-index: 2;
         }
 
         .skill-card p {
             color: var(--text-secondary);
             line-height: 1.6;
-            position: relative;
-            z-index: 2;
+            font-size: 1rem;
+            flex-grow: 1;
         }
 
         /* Portfolio Section */
+        .portfolio {
+            background: var(--bg-secondary);
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .portfolio-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
         .portfolio-filters {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: var(--bg-card);
+            background: transparent;
             color: var(--text-secondary);
-            border: 1px solid var(--border-primary);
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
+            border: 2px solid var(--border-primary);
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: var(--transition-smooth);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .filter-btn.active,
@@ -479,22 +581,25 @@
             background: var(--ai-gradient);
             color: white;
             border-color: transparent;
+            transform: translateY(-2px);
         }
 
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
         }
 
         .portfolio-card {
             background: var(--bg-card);
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             transition: var(--transition-smooth);
             border: 1px solid var(--border-primary);
             cursor: pointer;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .portfolio-card::before {
@@ -503,20 +608,20 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 4px;
             background: var(--ai-gradient);
-            opacity: 0;
+            transform: scaleX(0);
             transition: var(--transition-smooth);
-            z-index: 1;
         }
 
         .portfolio-card:hover::before {
-            opacity: 0.1;
+            transform: scaleX(1);
         }
 
         .portfolio-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--shadow-strong);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--shadow-medium);
+            border-color: var(--glow-primary);
         }
 
         .portfolio-image {
@@ -528,17 +633,22 @@
             justify-content: center;
             font-size: 3rem;
             position: relative;
-            z-index: 2;
+            transition: var(--transition-smooth);
+        }
+
+        .portfolio-card:hover .portfolio-image {
+            transform: scale(1.02);
         }
 
         .portfolio-content {
             padding: 2rem;
-            position: relative;
-            z-index: 2;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .portfolio-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
             color: var(--text-primary);
             font-weight: 700;
@@ -547,76 +657,114 @@
         .portfolio-content p {
             color: var(--text-secondary);
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
         }
 
         .portfolio-tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+            margin-top: auto;
         }
 
         .tag {
             background: var(--bg-secondary);
             color: var(--text-muted);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
+            padding: 0.375rem 0.875rem;
+            border-radius: 6px;
             font-size: 0.8rem;
             font-weight: 500;
+            border: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
+        }
+
+        .tag:hover {
+            background: var(--ai-gradient);
+            color: white;
+            border-color: transparent;
         }
 
         /* Contact Section */
         .contact {
-            background: var(--bg-secondary);
-            border-radius: 30px;
-            margin: 2rem;
-            padding: 4rem 2rem;
-            text-align: center;
+            background: var(--bg-primary);
+            padding: 6rem 0;
+            position: relative;
         }
 
-        .contact-content {
-            max-width: 800px;
+        .contact-container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
         }
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
         .contact-item {
             background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 20px;
+            padding: 2.5rem;
+            border-radius: 16px;
             text-decoration: none;
             color: var(--text-primary);
             transition: var(--transition-smooth);
             border: 1px solid var(--border-primary);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--ai-gradient);
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .contact-item:hover::before {
+            transform: scaleX(1);
         }
 
         .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px var(--shadow-strong);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--shadow-medium);
             border-color: var(--glow-primary);
         }
 
         .contact-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
             display: block;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.05);
         }
 
         .contact-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
         }
 
         .contact-item p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         /* Animations */
@@ -773,154 +921,176 @@
         </div>
         
         <div class="about-content">
+            <div class="about-intro">
+                <h3>Transforming Ideas into Intelligent Solutions</h3>
+            </div>
+            
             <div class="about-text">
                 <p>As an AI Engineer and Machine Learning Researcher, I specialize in developing cutting-edge solutions that bridge the gap between complex data challenges and practical business applications. My expertise spans across Large Language Models, Computer Vision, and Deep Learning architectures.</p>
                 
                 <p>I'm passionate about creating AI systems that not only perform exceptionally but also provide meaningful impact. From building intelligent chatbots and recommendation systems to developing computer vision models for medical imaging, I approach each project with a focus on innovation, scalability, and real-world applicability.</p>
-                
-                <p>My work combines theoretical knowledge with practical implementation, ensuring that every AI solution I develop is both technically sound and commercially viable. I believe in the power of AI to transform industries and improve lives, and I'm committed to being at the forefront of this technological revolution.</p>
             </div>
-            <div class="about-image">
+            
+            <div class="about-image-container">
                 <img src="images/headshot.png" alt="Andreas Wagner - AI Engineer">
+            </div>
+            
+            <div class="about-stats">
+                <div class="about-stat">
+                    <span class="about-stat-number">3+</span>
+                    <span class="about-stat-label">Years Experience</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-number">50+</span>
+                    <span class="about-stat-label">AI Projects</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-number">15+</span>
+                    <span class="about-stat-label">Technologies</span>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="section skills">
-        <div class="section-header">
-            <h2 class="section-title">Technical Expertise</h2>
-            <p class="section-subtitle">Mastering the tools and technologies that power modern AI systems</p>
-        </div>
-        
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">🤖</div>
-                <h3>Machine Learning</h3>
-                <p>Advanced expertise in supervised, unsupervised, and reinforcement learning algorithms. Experience with ensemble methods, neural networks, and model optimization techniques.</p>
+    <section id="skills" class="skills">
+        <div class="skills-container">
+            <div class="section-header">
+                <h2 class="section-title">Technical Expertise</h2>
+                <p class="section-subtitle">Mastering the tools and technologies that power modern AI systems</p>
             </div>
             
-            <div class="skill-card">
-                <div class="skill-icon">🧠</div>
-                <h3>Large Language Models</h3>
-                <p>Specialized in LLM fine-tuning, RAG systems, prompt engineering, and transformer architectures. Experience with GPT, BERT, and custom model development.</p>
-            </div>
-            
-            <div class="skill-card">
-                <div class="skill-icon">👁️</div>
-                <h3>Computer Vision</h3>
-                <p>Expert in image classification, object detection, semantic segmentation, and medical imaging. Proficient with CNN architectures and vision transformers.</p>
-            </div>
-            
-            <div class="skill-card">
-                <div class="skill-icon">🐍</div>
-                <h3>Python & AI Frameworks</h3>
-                <p>Expert-level Python development with TensorFlow, PyTorch, Scikit-learn, and other ML libraries. Strong background in data science and MLOps practices.</p>
-            </div>
-            
-            <div class="skill-card">
-                <div class="skill-icon">☁️</div>
-                <h3>MLOps & Cloud</h3>
-                <p>Experience with model deployment, containerization, cloud platforms (AWS, GCP, Azure), and CI/CD pipelines for machine learning systems.</p>
-            </div>
-            
-            <div class="skill-card">
-                <div class="skill-icon">📊</div>
-                <h3>Data Engineering</h3>
-                <p>Proficient in data preprocessing, feature engineering, ETL pipelines, and big data technologies. Experience with SQL, NoSQL, and distributed computing.</p>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Advanced expertise in supervised, unsupervised, and reinforcement learning algorithms. Experience with ensemble methods, neural networks, and model optimization techniques.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">🧠</div>
+                    <h3>Large Language Models</h3>
+                    <p>Specialized in LLM fine-tuning, RAG systems, prompt engineering, and transformer architectures. Experience with GPT, BERT, and custom model development.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">👁️</div>
+                    <h3>Computer Vision</h3>
+                    <p>Expert in image classification, object detection, semantic segmentation, and medical imaging. Proficient with CNN architectures and vision transformers.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <h3>Python & AI Frameworks</h3>
+                    <p>Expert-level Python development with TensorFlow, PyTorch, Scikit-learn, and other ML libraries. Strong background in data science and MLOps practices.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h3>MLOps & Cloud</h3>
+                    <p>Experience with model deployment, containerization, cloud platforms (AWS, GCP, Azure), and CI/CD pipelines for machine learning systems.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Engineering</h3>
+                    <p>Proficient in data preprocessing, feature engineering, ETL pipelines, and big data technologies. Experience with SQL, NoSQL, and distributed computing.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="section">
-        <div class="section-header">
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">Showcasing innovative AI solutions and machine learning applications</p>
-        </div>
-        
-        <div class="portfolio-filters">
-            <button class="filter-btn active" data-filter="all">All Projects</button>
-            <button class="filter-btn" data-filter="llm">LLM & NLP</button>
-            <button class="filter-btn" data-filter="cv">Computer Vision</button>
-            <button class="filter-btn" data-filter="ml">Machine Learning</button>
-        </div>
-        
-        <div class="portfolio-grid" id="portfolio-grid">
-            <div class="portfolio-card" data-category="llm">
-                <div class="portfolio-image">🤖</div>
-                <div class="portfolio-content">
-                    <h3>Intelligent Chatbot System</h3>
-                    <p>Advanced conversational AI powered by fine-tuned language models with context awareness and multi-turn dialogue capabilities.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Transformers</span>
-                        <span class="tag">RAG</span>
-                    </div>
-                </div>
+    <section id="portfolio" class="portfolio">
+        <div class="portfolio-container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Showcasing innovative AI solutions and machine learning applications</p>
             </div>
             
-            <div class="portfolio-card" data-category="cv">
-                <div class="portfolio-image">👁️</div>
-                <div class="portfolio-content">
-                    <h3>Medical Image Analysis</h3>
-                    <p>Deep learning system for automated medical image classification and anomaly detection with 95%+ accuracy.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">PyTorch</span>
-                        <span class="tag">CNN</span>
-                        <span class="tag">Medical AI</span>
-                    </div>
-                </div>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="llm">LLM & NLP</button>
+                <button class="filter-btn" data-filter="cv">Computer Vision</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
             </div>
             
-            <div class="portfolio-card" data-category="ml">
-                <div class="portfolio-image">📊</div>
-                <div class="portfolio-content">
-                    <h3>Predictive Analytics Platform</h3>
-                    <p>End-to-end ML pipeline for real-time predictions with automated feature engineering and model monitoring.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">Scikit-learn</span>
-                        <span class="tag">MLOps</span>
-                        <span class="tag">AWS</span>
+            <div class="portfolio-grid" id="portfolio-grid">
+                <div class="portfolio-card" data-category="llm">
+                    <div class="portfolio-image">🤖</div>
+                    <div class="portfolio-content">
+                        <h3>Intelligent Chatbot System</h3>
+                        <p>Advanced conversational AI powered by fine-tuned language models with context awareness and multi-turn dialogue capabilities.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Transformers</span>
+                            <span class="tag">RAG</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="portfolio-card" data-category="llm">
-                <div class="portfolio-image">🔍</div>
-                <div class="portfolio-content">
-                    <h3>Document Intelligence System</h3>
-                    <p>NLP-powered document processing with entity extraction, summarization, and intelligent search capabilities.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">NLP</span>
-                        <span class="tag">BERT</span>
-                        <span class="tag">Document AI</span>
+                
+                <div class="portfolio-card" data-category="cv">
+                    <div class="portfolio-image">👁️</div>
+                    <div class="portfolio-content">
+                        <h3>Medical Image Analysis</h3>
+                        <p>Deep learning system for automated medical image classification and anomaly detection with 95%+ accuracy.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">CNN</span>
+                            <span class="tag">Medical AI</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="portfolio-card" data-category="cv">
-                <div class="portfolio-image">🎯</div>
-                <div class="portfolio-content">
-                    <h3>Object Detection API</h3>
-                    <p>Real-time object detection service with custom YOLO implementation and RESTful API for production deployment.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">YOLO</span>
-                        <span class="tag">OpenCV</span>
-                        <span class="tag">FastAPI</span>
+                
+                <div class="portfolio-card" data-category="ml">
+                    <div class="portfolio-image">📊</div>
+                    <div class="portfolio-content">
+                        <h3>Predictive Analytics Platform</h3>
+                        <p>End-to-end ML pipeline for real-time predictions with automated feature engineering and model monitoring.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">MLOps</span>
+                            <span class="tag">AWS</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="portfolio-card" data-category="ml">
-                <div class="portfolio-image">⚡</div>
-                <div class="portfolio-content">
-                    <h3>Recommendation Engine</h3>
-                    <p>Hybrid recommendation system combining collaborative filtering and content-based approaches for e-commerce.</p>
-                    <div class="portfolio-tags">
-                        <span class="tag">Recommendation</span>
-                        <span class="tag">Matrix Factorization</span>
-                        <span class="tag">Spark</span>
+                
+                <div class="portfolio-card" data-category="llm">
+                    <div class="portfolio-image">🔍</div>
+                    <div class="portfolio-content">
+                        <h3>Document Intelligence System</h3>
+                        <p>NLP-powered document processing with entity extraction, summarization, and intelligent search capabilities.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">NLP</span>
+                            <span class="tag">BERT</span>
+                            <span class="tag">Document AI</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-card" data-category="cv">
+                    <div class="portfolio-image">🎯</div>
+                    <div class="portfolio-content">
+                        <h3>Object Detection API</h3>
+                        <p>Real-time object detection service with custom YOLO implementation and RESTful API for production deployment.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">YOLO</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">FastAPI</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-card" data-category="ml">
+                    <div class="portfolio-image">⚡</div>
+                    <div class="portfolio-content">
+                        <h3>Recommendation Engine</h3>
+                        <p>Hybrid recommendation system combining collaborative filtering and content-based approaches for e-commerce.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Recommendation</span>
+                            <span class="tag">Matrix Factorization</span>
+                            <span class="tag">Spark</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -928,13 +1098,13 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="section-header">
-            <h2 class="section-title">Let's Build Something Amazing</h2>
-            <p class="section-subtitle">Ready to transform your ideas into intelligent AI solutions? Let's collaborate!</p>
-        </div>
-        
-        <div class="contact-content">
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <div class="section-header">
+                <h2 class="section-title">Let's Build Something Amazing</h2>
+                <p class="section-subtitle">Ready to transform your ideas into intelligent AI solutions? Let's collaborate!</p>
+            </div>
+            
             <div class="contact-info">
                 <a href="mailto:45andreas.wagner45@gmail.com" class="contact-item">
                     <span class="contact-icon">📧</span>
